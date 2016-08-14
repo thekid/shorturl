@@ -42,15 +42,26 @@ Working with the service
 Create a URL:
 
 ```sh
-$ curl -i localhost:8080 -d "url=http://thekid.de/"
+$ curl -i localhost:8080 -d "url=https://github.com/"
 HTTP/1.1 201
 Date: Sun, 14 Aug 2016 10:25:39 GMT
 Server: XP/PHP
 Connection: close
-Location: http://localhost:8080/ce70d4a
+Location: http://localhost:8080/d7b3438
 ```
 
-Create a URL:
+Access the URL:
+
+```sh
+$ curl -i localhost:8080/d7b3438
+HTTP/1.1 302
+Date: Sun, 14 Aug 2016 10:26:17 GMT
+Server: XP/PHP
+Connection: close
+Location: https://github.com/
+```
+
+Create a named URL:
 
 ```sh
 $ curl -i localhost:8080 -d "url=http://thekid.de/&name=home"
@@ -59,18 +70,6 @@ Date: Sun, 14 Aug 2016 10:25:39 GMT
 Server: XP/PHP
 Connection: close
 Location: http://localhost:8080/home
-```
-
-
-Access the URL:
-
-```sh
-$ curl -i localhost:8080/ce70d4a
-HTTP/1.1 302
-Date: Sun, 14 Aug 2016 10:26:17 GMT
-Server: XP/PHP
-Connection: close
-Location: http://thekid.de/
 ```
 
 Administering the service
@@ -86,13 +85,13 @@ Server: XP/PHP
 Connection: close
 Content-Type: application/json
 
-[{"id":"d7b3438","value":"https://github.com/"},{"id":"ce70d4a","value":"http://thekid.de/"}]
+[{"id":"d7b3438","value":"https://github.com/"},{"id":"home","value":"http://thekid.de/"}]
 ```
 
 Delete URLs:
 
 ```sh
-$ curl -i -X DELETE admin:$HUDDLE_PASS@localhost:8080/ce70d4a
+$ curl -i -X DELETE admin:$HUDDLE_PASS@localhost:8080/d7b3438
 HTTP/1.1 204
 Date: Sun, 14 Aug 2016 10:38:26 GMT
 Server: XP/PHP
