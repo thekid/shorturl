@@ -2,9 +2,7 @@
 
 use xp\scriptlet\WebApplication;
 use inject\Injector;
-use scriptlet\Filter;
 use webservices\rest\srv\RestContext;
-use webservices\rest\srv\RestScriptlet;
 use util\log\LogCategory;
 use util\log\ConsoleAppender;
 use util\log\LogLevel;
