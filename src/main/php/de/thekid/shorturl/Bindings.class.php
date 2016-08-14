@@ -6,11 +6,12 @@ use xp\scriptlet\WebApplication;
 use scriptlet\Filter;
 use webservices\rest\srv\RestContext;
 use webservices\rest\srv\RestScriptlet;
+use util\Secret;
 
 class Bindings extends \inject\Bindings {
 
   public function configure($injector) {
-    $pass= getenv('HUDDLE_PASS');
+    $pass= $injector->get(Secret::class, 'huddle_pass')->reveal();
 
     $conn= DriverManager::getConnection('mysql://huddle:'.$pass.'@127.0.0.1/HUDDLE');
     $injector->bind(DBConnection::class, $conn, 'huddle');
