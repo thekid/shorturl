@@ -44,6 +44,18 @@ Connection: close
 Location: http://localhost:8080/ce70d4a
 ```
 
+Create a URL:
+
+```sh
+$ curl -i localhost:8080 -d "url=http://thekid.de/&name=home"
+HTTP/1.1 201
+Date: Sun, 14 Aug 2016 10:25:39 GMT
+Server: XP/PHP
+Connection: close
+Location: http://localhost:8080/home
+```
+
+
 Access the URL:
 
 ```sh
@@ -61,7 +73,7 @@ Administering the service
 List URLs:
 
 ```sh
-$ curl -i admin:j383lsfs7@localhost:8080
+$ curl -i admin:$HUDDLE_PASS@localhost:8080
 HTTP/1.1 200
 Date: Sun, 14 Aug 2016 10:39:42 GMT
 Server: XP/PHP
