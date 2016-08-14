@@ -54,3 +54,29 @@ Server: XP/PHP
 Connection: close
 Location: http://thekid.de/
 ```
+
+Administering the service
+-------------------------
+
+List URLs:
+
+```sh
+$ curl -i admin:j383lsfs7@localhost:8080
+HTTP/1.1 200
+Date: Sun, 14 Aug 2016 10:39:42 GMT
+Server: XP/PHP
+Connection: close
+Content-Type: application/json
+
+[{"id":"d7b3438","value":"https://github.com/"},{"id":"ce70d4a","value":"http://thekid.de/"}]
+```
+
+Delete URLs:
+
+```sh
+$ curl -i -X DELETE admin:$HUDDLE_PASS@localhost:8080/ce70d4a
+HTTP/1.1 204
+Date: Sun, 14 Aug 2016 10:38:26 GMT
+Server: XP/PHP
+Connection: close
+```
