@@ -8,12 +8,13 @@ use util\log\ConsoleAppender;
 use util\log\LogLevel;
 use security\vault\Vault;
 use security\vault\FromEnvironment;
+use security\vault\FromFile;
 
 class Api implements \xp\scriptlet\WebLayout {
 
   /** @return [:xp.scriptlet.WebApplication] */
   public function mappedApplications($profile= null) {
-    $vault= new Vault(new FromEnvironment(FromEnvironment::REMOVE));
+    $vault= new Vault(new FromEnvironment(FromEnvironment::REMOVE), new FromFile('passwd'));
     $injector= new Injector(new SecretsIn($vault), new Bindings());
 
     if ('dev' === $profile) {
