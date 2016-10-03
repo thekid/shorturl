@@ -6,10 +6,10 @@
   "description" : "ShortURL service in the XP Framework",
   "keywords": ["xp"],
   "require" : {
-    "xp-framework/core": "^7.0",
-    "xp-framework/rdbms": "^8.0",
-    "xp-framework/rest": "^7.2",
-    "xp-forge/inject": "^2.2",
+    "xp-framework/core": "^8.0 | ^7.0",
+    "xp-framework/rdbms": "^9.0",
+    "xp-framework/rest": "^8.0",
+    "xp-forge/inject": "^3.1",
     "php" : ">=5.6.0"
   }
 }
