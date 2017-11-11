@@ -3,8 +3,7 @@
 use inject\ConfiguredBindings;
 use inject\Injector;
 use scriptlet\Run;
-use util\log\ConsoleAppender;
-use util\log\LogCategory;
+use util\log\Logging;
 use util\log\LogLevel;
 use web\Error;
 use web\Filter;
@@ -24,10 +23,7 @@ class Api extends \web\Application {
         return $injector->get($class);
       }
     ]);
-    $context->setTrace((new LogCategory('web'))->withAppender(
-      new ConsoleAppender(),
-      LogLevel::WARN | LogLevel::ERROR
-    ));
+    $context->setTrace(Logging::named('web')->of(LogLevel::WARN | LogLevel::ERROR)->toConsole());
 
     // Setup authentication
     $authenticate= newinstance(Filter::class, [], [
