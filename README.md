@@ -45,8 +45,6 @@ Create a URL:
 $ curl -i localhost:8080 -d "url=https://github.com/"
 HTTP/1.1 201
 Date: Sun, 14 Aug 2016 10:25:39 GMT
-Server: XP/PHP
-Connection: close
 Location: http://localhost:8080/d7b3438
 ```
 
@@ -56,8 +54,6 @@ Access the URL:
 $ curl -i localhost:8080/d7b3438
 HTTP/1.1 302
 Date: Sun, 14 Aug 2016 10:26:17 GMT
-Server: XP/PHP
-Connection: close
 Location: https://github.com/
 ```
 
@@ -67,8 +63,6 @@ Create a named URL:
 $ curl -i localhost:8080 -d "url=http://thekid.de/&name=home"
 HTTP/1.1 201
 Date: Sun, 14 Aug 2016 10:25:39 GMT
-Server: XP/PHP
-Connection: close
 Location: http://localhost:8080/home
 ```
 
@@ -81,8 +75,6 @@ List URLs:
 $ curl -i admin:$HUDDLE_PASS@localhost:8080
 HTTP/1.1 200
 Date: Sun, 14 Aug 2016 10:39:42 GMT
-Server: XP/PHP
-Connection: close
 Content-Type: application/json
 
 [{"id":"d7b3438","value":"https://github.com/"},{"id":"home","value":"http://thekid.de/"}]
@@ -94,6 +86,4 @@ Delete URLs:
 $ curl -i -X DELETE admin:$HUDDLE_PASS@localhost:8080/d7b3438
 HTTP/1.1 204
 Date: Sun, 14 Aug 2016 10:38:26 GMT
-Server: XP/PHP
-Connection: close
 ```
