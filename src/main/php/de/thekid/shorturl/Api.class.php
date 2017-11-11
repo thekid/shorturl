@@ -26,9 +26,19 @@ class Api extends \web\Application {
     $context->setTrace(Logging::named('web')->of(LogLevel::WARN | LogLevel::ERROR)->toConsole());
 
     // Setup authentication
+    $admin= base64_encode('admin:'.$injector->get('string', 'admin-pass'));
     $authenticate= newinstance(Filter::class, [], [
-      'filter' => function($request, $response, $invocation) {
-        $request->pass('user', '(nobody)');
+      'filter' => function($request, $response, $invocation) use($admin) {
+        $request->pass('user', null);
+        if (sscanf($request->header('Authorization'), 'Basic %s', $authorization)) {
+          if ($authorization !== $admin) {
+            $response->header('WWW-Authenticate', 'Basic realm="Administration"');
+            $response->answer(401, 'Unauthorized');
+            return;
+          }
+
+          $request->pass('user', 'admin');
+        }
         return $invocation->proceed($request, $response);
       }
     ]);
