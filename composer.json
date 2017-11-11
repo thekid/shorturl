@@ -1,15 +1,17 @@
 {
   "name" : "thekid/shorturl",
   "type" : "project",
-  "homepage" : "http://thekid.dde/",
+  "homepage" : "http://thekid.de/",
   "license" : "BSD-3-Clause",
   "description" : "ShortURL service in the XP Framework",
   "keywords": ["xp"],
   "require" : {
-    "xp-framework/core": "^8.0 | ^7.0",
-    "xp-framework/rdbms": "^9.0",
-    "xp-framework/rest": "^8.0",
-    "xp-forge/inject": "^3.1",
+    "xp-framework/core": "^9.0",
+    "xp-framework/rdbms": "^10.0",
+    "xp-framework/rest": "^9.0",
+    "xp-framework/scriptlet": "dev-feature/web-adapter as 9.1.0",
+    "xp-forge/inject": "^4.0",
+    "xp-forge/web": "^0.6",
     "php" : ">=5.6.0"
   }
 }

@@ -1,2 +1,16 @@
 src/main/php/
-?vendor/autoload.php
+vendor/autoload.php
+# ../xp/inject/src/main/php
+# ../xp/json/src/main/php
+# ../xp/collections/src/main/php
+# ../xp/http/src/main/php
+# ../xp/logging/src/main/php
+# ../xp/mail/src/main/php
+# ../xp/math/src/main/php
+# ../xp/networking/src/main/php
+# ../xp/rdbms/src/main/php
+# ../xp/rest/src/main/php
+# ../xp/scriptlet/src/main/php
+# ../xp/text-encode/src/main/php
+# ../xp/tokenize/src/main/php
+# ../xp/xml/src/main/php# 

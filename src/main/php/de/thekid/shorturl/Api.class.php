@@ -1,28 +1,44 @@
 <?php namespace de\thekid\shorturl;
 
-use xp\scriptlet\WebApplication;
+use inject\ConfiguredBindings;
 use inject\Injector;
-use webservices\rest\srv\RestContext;
-use util\log\LogCategory;
+use scriptlet\Run;
 use util\log\ConsoleAppender;
+use util\log\LogCategory;
 use util\log\LogLevel;
+use web\Error;
+use web\Filter;
+use web\Filters;
+use webservices\rest\srv\RestContext;
+use webservices\rest\srv\RestScriptlet;
 
-class Api implements \xp\scriptlet\WebLayout {
-
-  /** @return [:xp.scriptlet.WebApplication] */
-  public function mappedApplications($profile= null) {
-    $injector= new Injector(new Bindings());
-
-    if ('dev' === $profile) {
-      $injector->get(RestContext::class)->setTrace((new LogCategory('web'))->withAppender(
-        new ConsoleAppender(),
-        LogLevel::WARN | LogLevel::ERROR)
-      );
-    }
-
-    return ['/' => $injector->get(WebApplication::class)];
-  }
+class Api extends \web\Application {
 
   /** @return [:var] */
-  public function staticResources($profile= null) { return []; }
+  public function routes() {
+    $injector= new Injector(new ConfiguredBindings($this->environment->properties('inject')));
+
+    // Setup REST context
+    $context= newinstance(RestContext::class, [], [
+      'handlerInstanceFor' => function($class) use($injector) {
+        return $injector->get($class);
+      }
+    ]);
+    $context->setTrace((new LogCategory('web'))->withAppender(
+      new ConsoleAppender(),
+      LogLevel::WARN | LogLevel::ERROR
+    ));
+
+    // Setup authentication
+    $authenticate= newinstance(Filter::class, [], [
+      'filter' => function($request, $response, $invocation) {
+        $request->pass('user', '(nobody)');
+        return $invocation->proceed($request, $response);
+      }
+    ]);
+
+    return new Filters([$authenticate], [
+      '/' => new Run(new RestScriptlet('de.thekid.shorturl.api', '/', $context))
+    ]);
+  }
 }

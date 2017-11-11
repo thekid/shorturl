@@ -1,13 +1,13 @@
 <?php namespace de\thekid\shorturl;
 
-use rdbms\DBConnection;
+use rdbms\DriverManager;
 
 class Urls {
   private $conn;
 
-  #[@inject(name= 'huddle')]
-  public function __construct(DBConnection $conn) {
-    $this->conn= $conn;
+  #[@inject(type= 'string', name= 'de.thekid.shorturl.db-dsn')]
+  public function __construct($dsn) {
+    $this->conn= DriverManager::getConnection($dsn);
   }
 
   /**
@@ -49,6 +49,6 @@ class Urls {
    * @return php.Traversable
    */
   public function all($start, $limit) {
-    return $this->conn->query('select id, value from url limit %d, %d', max($start, 1), $limit);
+    return $this->conn->query('select id, value from url limit %d, %d', $start ?: 0, $limit);
   }
 }
