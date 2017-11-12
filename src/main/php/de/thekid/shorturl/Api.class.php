@@ -30,7 +30,7 @@ class Api extends \web\Application {
     $authenticate= newinstance(Filter::class, [], [
       'filter' => function($request, $response, $invocation) use($admin) {
         $request->pass('user', null);
-        if (sscanf($request->header('Authorization'), 'Basic %s', $authorization)) {
+        if (sscanf($request->header('Authorization'), 'Basic %s', $authorization) > 0) {
           if ($authorization !== $admin) {
             $response->header('WWW-Authenticate', 'Basic realm="Administration"');
             $response->answer(401, 'Unauthorized');

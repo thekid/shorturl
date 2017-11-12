@@ -9,9 +9,9 @@
     "xp-framework/core": "^9.0",
     "xp-framework/rdbms": "^10.0",
     "xp-framework/rest": "^9.0",
-    "xp-framework/scriptlet": "dev-feature/web-adapter as 9.1.0",
+    "xp-framework/scriptlet": "^9.1",
     "xp-forge/inject": "^4.0",
-    "xp-forge/web": "^0.6",
+    "xp-forge/web": "^0.7",
     "php" : ">=5.6.0"
   }
 }
