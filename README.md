@@ -33,7 +33,7 @@ Start the server:
 
 ```sh
 $ export HUDDLE_PASS=...
-$ xp web de.thekid.shorturl.Api
+$ xp -supervise web -c src/main/etc/prod de.thekid.shorturl.Api
 ```
 
 Working with the service
