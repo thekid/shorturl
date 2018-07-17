@@ -1,36 +1,23 @@
 <?php namespace de\thekid\shorturl\api;
 
-use webservices\rest\srv\Response;
-use scriptlet\Request;
+use web\Request;
+use web\rest\Response;
 
-#[@webservice]
 class Administration extends Handler {
 
-  /**
-   * Returns all URLs
-   *
-   * @param  string $user
-   * @param  scriptlet.Request $request
-   * @return webservices.rest.srv.Response
-   */
-  #[@webmethod(verb= 'GET', path= '/'), @$user: header, @$request: request]
-  public function all($user, Request $request) {
+  /** Returns all URLs */
+  #[@get('/'), @$user: value, @$request: request]
+  public function all(string $user, Request $request): Response {
     $pagination= $this->paging()->on($request);
-    return Response::paginated($pagination, $this->urls->all(
+    return $pagination->paginate($this->urls->all(
       $pagination->start(),
       $pagination->limit() + 1
     ));
   }
 
-  /**
-   * Deletes a URL by a given ID
-   *
-   * @param  string $id
-   * @param  string $user
-   * @return webservices.rest.srv.Response
-   */
-  #[@webmethod(verb= 'DELETE', path= '/{id}'), @$user: header]
-  public function delete($id, $user) {
+  /** Deletes a URL by a given ID */
+  #[@delete('/{id}'), @$user: value]
+  public function delete(string $user, string $id): Response {
     $this->urls->remove($id);
     return Response::noContent();
   }

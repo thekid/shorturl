@@ -45,7 +45,7 @@ Create a URL:
 $ curl -i localhost:8080 -d "url=https://github.com/"
 HTTP/1.1 201
 Date: Sun, 14 Aug 2016 10:25:39 GMT
-Location: http://localhost:8080/d7b3438
+Location: /d7b3438
 ```
 
 Access the URL:
@@ -63,7 +63,7 @@ Create a named URL:
 $ curl -i localhost:8080 -d "url=http://thekid.de/&name=home"
 HTTP/1.1 201
 Date: Sun, 14 Aug 2016 10:25:39 GMT
-Location: http://localhost:8080/home
+Location: /home
 ```
 
 Administering the service

@@ -1,21 +1,14 @@
 <?php namespace de\thekid\shorturl\api;
 
-use webservices\rest\srv\Response;
 use peer\URL;
+use web\rest\Response;
 
-#[@webservice]
 class PublicAccess extends Handler {
   const SHA1_MIN = 7;
   const SHA1_MAX = 40;
 
-  /**
-   * Creates an entry with a given name
-   *
-   * @param  string $name
-   * @param  string $canonical
-   * @return webservices.rest.srv.Response
-   */
-  private function createNamed($name, $canonical) {
+  /** Creates an entry with a given name */
+  private function createNamed(string $name, string $canonical): Response {
     if ($this->urls->lookup($name)) {
       return Response::error(409, 'Name "'.$name.'" already taken');
     }
@@ -24,13 +17,8 @@ class PublicAccess extends Handler {
     return Response::created('/'.$name);
   }
 
-  /**
-   * Creates an entry with an ID
-   *
-   * @param  string $canonical
-   * @return webservices.rest.srv.Response
-   */
-  private function createWithId($canonical) {
+  /** Creates an entry with an ID */
+  private function createWithId(string $canonical): Response {
     $sha1= sha1($canonical);
     $offset= self::SHA1_MIN;
     do {
@@ -49,15 +37,9 @@ class PublicAccess extends Handler {
     return Response::error(503, 'Cannot store '.$canonical);
   }
 
-  /**
-   * Creates a new URL
-   *
-   * @param  string $url
-   * @param  string $name
-   * @return webservices.rest.srv.Response
-   */
-  #[@webmethod(verb= 'POST'), @$url: param, @$name: param]
-  public function create($url, $name= null) {
+  /** Creates a new URL */
+  #[@post('/'), @$url: param, @$name: param]
+  public function create(string $url, string $name= null): Response {
     $canonical= (new URL($url))->getCanonicalURL();
     if (null === $name) {
       return $this->createWithId($canonical);
@@ -66,14 +48,9 @@ class PublicAccess extends Handler {
     }
   }
 
-  /**
-   * Redirects to an existing URL
-   *
-   * @param  string $id
-   * @return webservices.rest.srv.Response
-   */
-  #[@webmethod(verb= 'GET', path= '/{id}')]
-  public function get($id) {
+  /** Redirects to an existing URL */
+  #[@get('/{id}')]
+  public function get(string $id): Response {
     if ($url= $this->urls->lookup($id)) {
       return Response::see($url);
     } else {

@@ -1,29 +1,13 @@
 <?php namespace de\thekid\shorturl;
 
-use inject\ConfiguredBindings;
-use inject\Injector;
-use scriptlet\Run;
-use util\log\Logging;
-use util\log\LogLevel;
-use web\Error;
-use web\Filter;
-use web\Filters;
-use webservices\rest\srv\RestContext;
-use webservices\rest\srv\RestScriptlet;
+use inject\{Injector, ConfiguredBindings};
+use web\rest\{RestApi, ClassesIn};
+use web\{Application, Filter, Filters};
 
-class Api extends \web\Application {
+class Api extends Application {
 
-  /** @return [:var] */
   public function routes() {
     $injector= new Injector(new ConfiguredBindings($this->environment->properties('inject')));
-
-    // Setup REST context
-    $context= newinstance(RestContext::class, [], [
-      'handlerInstanceFor' => function($class) use($injector) {
-        return $injector->get($class);
-      }
-    ]);
-    $context->setTrace(Logging::named('web')->of(LogLevel::WARN | LogLevel::ERROR)->toConsole());
 
     // Setup authentication
     $admin= base64_encode('admin:'.$injector->get('string', 'admin-pass'));
@@ -43,8 +27,6 @@ class Api extends \web\Application {
       }
     ]);
 
-    return new Filters([$authenticate], [
-      '/' => new Run(new RestScriptlet('de.thekid.shorturl.api', '/', $context))
-    ]);
+    return new Filters([$authenticate], new RestApi(new ClassesIn('de.thekid.shorturl.api', [$injector, 'get'])));
   }
 }
