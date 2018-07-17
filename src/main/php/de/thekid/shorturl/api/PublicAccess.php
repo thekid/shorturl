@@ -4,8 +4,8 @@ use peer\URL;
 use web\rest\Response;
 
 class PublicAccess extends Handler {
-  const SHA1_MIN = 7;
-  const SHA1_MAX = 40;
+  private const SHA1_MIN = 7;
+  private const SHA1_MAX = 40;
 
   /** Creates an entry with a given name */
   private function createNamed(string $name, string $canonical): Response {
@@ -38,9 +38,9 @@ class PublicAccess extends Handler {
   }
 
   /** Creates a new URL */
-  #[@post('/'), @$url: param, @$name: param]
-  public function create(string $url, string $name= null): Response {
-    $canonical= (new URL($url))->getCanonicalURL();
+  <<post('/')>>
+  public function create(<<param>> string $url, <<param>> string $name= null): Response {
+    $canonical= new URL($url)->getCanonicalURL();
     if (null === $name) {
       return $this->createWithId($canonical);
     } else {
@@ -49,7 +49,7 @@ class PublicAccess extends Handler {
   }
 
   /** Redirects to an existing URL */
-  #[@get('/{id}')]
+  <<get('/{id}')>>
   public function get(string $id): Response {
     if ($url= $this->urls->lookup($id)) {
       return Response::see($url);
