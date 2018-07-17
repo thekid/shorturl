@@ -18,7 +18,10 @@ class Administration extends Handler {
   /** Deletes a URL by a given ID */
   <<delete('/{id}')>>
   public function delete(<<value>> string $user, string $id): Response {
-    $this->urls->remove($id);
-    return Response::noContent();
+    if ($this->urls->remove($id)) {
+      return Response::noContent();
+    } else {
+      return Response::notFound(['message' => 'No url by id #'.$id]);
+    }
   }
 }

@@ -20,8 +20,8 @@ class Urls {
   }
 
   /** Removes an URL */
-  public function remove(string $id): void {
-    $this->conn->delete('from url where id = %s', $id);
+  public function remove(string $id): int {
+    return $this->conn->delete('from url where id = %s', $id);
   }
 
   /**Fetches all URLS */
