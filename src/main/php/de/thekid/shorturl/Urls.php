@@ -24,7 +24,7 @@ class Urls {
     return $this->conn->delete('from url where id = %s', $id);
   }
 
-  /**Fetches all URLS */
+  /** Fetches all URLs */
   public function all(int $start, int $limit): iterable {
     return $this->conn->query('select id, value from url limit %d, %d', $start, $limit);
   }
