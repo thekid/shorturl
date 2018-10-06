@@ -1,7 +1,7 @@
 <?php namespace de\thekid\shorturl;
 
 use inject\{Injector, ConfiguredBindings};
-use web\rest\{RestApi, ClassesIn};
+use web\rest\{RestApi, ResourcesIn};
 use web\{Application, Filter, Filters};
 
 class Api extends Application {
@@ -27,6 +27,6 @@ class Api extends Application {
       }
     ]);
 
-    return new Filters([$authenticate], new RestApi(new ClassesIn('de.thekid.shorturl.api', [$injector, 'get'])));
+    return new Filters([$authenticate], new RestApi(new ResourcesIn('de.thekid.shorturl.api', [$injector, 'get'])));
   }
 }

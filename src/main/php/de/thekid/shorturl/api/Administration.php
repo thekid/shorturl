@@ -3,6 +3,7 @@
 use web\Request;
 use web\rest\Response;
 
+<<resource>>
 class Administration extends Handler {
 
   /** Returns all URLs */
