@@ -12,7 +12,7 @@ class Api extends Application {
     // Setup authentication
     $admin= base64_encode('admin:'.$injector->get('string', 'admin-pass'));
     $authenticate= newinstance(Filter::class, [], [
-      'filter' => ($request, $response, $invocation) ==> {
+      'filter' => fn($request, $response, $invocation) => {
         $request->pass('user', null);
         if (sscanf($request->header('Authorization'), 'Basic %s', $authorization) > 0) {
           if ($authorization !== $admin) {

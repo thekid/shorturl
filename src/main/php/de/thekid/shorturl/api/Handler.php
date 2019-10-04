@@ -8,5 +8,5 @@ abstract class Handler {
   public function __construct(protected Urls $urls) { }
 
   /** Creates default paging */
-  protected function paging() ==> new Paging(50, [new PageParameters('page', 'per_page')]);
+  protected fn paging() => new Paging(50, [new PageParameters('page', 'per_page')]);
 }
