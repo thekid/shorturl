@@ -3,6 +3,7 @@
 use peer\URL;
 use web\rest\Response;
 
+<<resource>>
 class PublicAccess extends Handler {
   private const SHA1_MIN = 7;
   private const SHA1_MAX = 40;
