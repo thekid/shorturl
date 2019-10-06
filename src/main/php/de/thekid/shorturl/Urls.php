@@ -5,7 +5,7 @@ use rdbms\DriverManager;
 class Urls {
   private $conn;
 
-  public function __construct(<<inject(['name' => 'db-dsn'])>> string $dsn) {
+  public function __construct(<<inject('db-dsn')>> string $dsn) {
     $this->conn= DriverManager::getConnection($dsn);
   }
 
