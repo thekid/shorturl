@@ -11,21 +11,20 @@ class Api extends Application {
 
     // Setup authentication
     $admin= base64_encode('admin:'.$injector->get('string', 'admin-pass'));
-    $authenticate= newinstance(Filter::class, [], [
-      'filter' => fn($request, $response, $invocation) => {
-        $request->pass('user', null);
-        if (sscanf($request->header('Authorization'), 'Basic %s', $authorization) > 0) {
-          if ($authorization !== $admin) {
-            $response->header('WWW-Authenticate', 'Basic realm="Administration"');
-            $response->answer(401, 'Unauthorized');
-            return;
-          }
-
-          $request->pass('user', 'admin');
+    $authenticate= fn($request, $response, $invocation) => {
+      if (sscanf($request->header('Authorization'), 'Basic %s', $authorization) > 0) {
+        if ($authorization !== $admin) {
+          $response->header('WWW-Authenticate', 'Basic realm="Administration"');
+          $response->answer(401, 'Unauthorized');
+          return;
         }
-        return $invocation->proceed($request, $response);
+
+        $request->pass('user', 'admin');
+      } else {
+        $request->pass('user', null);
       }
-    ]);
+      return $invocation->proceed($request, $response);
+    };
 
     return new Filters([$authenticate], new RestApi(new ResourcesIn('de.thekid.shorturl.api', [$injector, 'get'])));
   }
