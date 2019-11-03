@@ -2,7 +2,7 @@
 
 use inject\{Injector, ConfiguredBindings};
 use web\rest\{RestApi, ResourcesIn};
-use web\{Application, Filter, Filters};
+use web\{Application, Filters};
 
 class Api extends Application {
 
