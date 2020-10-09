@@ -15,7 +15,7 @@ class PublicAccess extends Handler {
     }
 
     $this->urls->create($name, $canonical);
-    return Response::created('/'.$name);
+    return Response::created('/{name}', $name);
   }
 
   /** Creates an entry with an ID */
@@ -27,9 +27,9 @@ class PublicAccess extends Handler {
       $stored= $this->urls->lookup($id);
       if (null === $stored) {
         $this->urls->create($id, $canonical);
-        return Response::created('/'.$id);
+        return Response::created('/{id}', $id);
       } else if ($canonical === $stored) {
-        return Response::see('/'.$id);
+        return Response::see('/{id}', $id);
       }
 
       // Another URL stored under this ID, disambiguate by using more of SHA
@@ -40,8 +40,8 @@ class PublicAccess extends Handler {
 
   /** Creates a new URL */
   #[Post('/')]
-  public function create(#[Param] string $url, #[Param] string $name= null): Response {
-    $canonical= new URL($url)->getCanonicalURL();
+  public function create(#[Param] URL $url, #[Param] string $name= null): Response {
+    $canonical= $url->getCanonicalURL();
     if (null === $name) {
       return $this->createWithId($canonical);
     } else {
