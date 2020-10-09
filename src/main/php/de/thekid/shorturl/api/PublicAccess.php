@@ -1,7 +1,7 @@
 <?php namespace de\thekid\shorturl\api;
 
 use peer\URL;
-use web\rest\{Response, Resource, Get, Post};
+use web\rest\{Response, Resource, Get, Post, Param};
 
 #[Resource]
 class PublicAccess extends Handler {
@@ -40,7 +40,7 @@ class PublicAccess extends Handler {
 
   /** Creates a new URL */
   #[Post('/')]
-  public function create(URL $url, string $name= null): Response {
+  public function create(#[Param] URL $url, #[Param] string $name= null): Response {
     $canonical= $url->getCanonicalURL();
     if (null === $name) {
       return $this->createWithId($canonical);
