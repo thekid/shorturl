@@ -11,7 +11,7 @@
     "xp-framework/rdbms": "^13.0",
     "xp-forge/inject": "^5.0",
     "xp-forge/web": "^2.0",
-    "xp-forge/rest-api": "^2.0",
+    "xp-forge/rest-api": "^3.0",
     "xp-lang/php-compact-methods": "^1.0",
     "php" : ">=7.0.0"
   }

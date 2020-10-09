@@ -1,13 +1,14 @@
 <?php namespace de\thekid\shorturl\api;
 
-use web\rest\{Request, Response, Resource, Get, Delete, Value};
+use web\Request;
+use web\rest\{Response, Resource, Get, Delete, Value};
 
 #[Resource]
 class Administration extends Handler {
 
   /** Returns all URLs */
   #[Get('/')]
-  public function all(#[Value] string $user, #[Request] $request): Response {
+  public function all(#[Value] string $user, Request $request): Response {
     $pagination= $this->paging()->on($request);
     return $pagination->paginate($this->urls->all(
       $pagination->start() ?: 0,
