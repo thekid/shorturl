@@ -1,14 +1,13 @@
 <?php namespace de\thekid\shorturl\api;
 
-use web\Request;
-use web\rest\Response;
+use web\rest\{Request, Response, Resource, Get, Delete, Value};
 
-<<resource>>
+#[Resource]
 class Administration extends Handler {
 
   /** Returns all URLs */
-  <<get('/')>>
-  public function all(<<value>> string $user, <<request>> Request $request): Response {
+  #[Get('/')]
+  public function all(#[Value] string $user, #[Request] $request): Response {
     $pagination= $this->paging()->on($request);
     return $pagination->paginate($this->urls->all(
       $pagination->start() ?: 0,
@@ -17,8 +16,8 @@ class Administration extends Handler {
   }
 
   /** Deletes a URL by a given ID */
-  <<delete('/{id}')>>
-  public function delete(<<value>> string $user, string $id): Response {
+  #[Delete('/{id}')]
+  public function delete(#[Value] string $user, string $id): Response {
     if ($this->urls->remove($id)) {
       return Response::noContent();
     } else {

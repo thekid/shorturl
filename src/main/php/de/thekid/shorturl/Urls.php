@@ -1,11 +1,12 @@
 <?php namespace de\thekid\shorturl;
 
+use inject\Inject;
 use rdbms\DriverManager;
 
 class Urls {
   private $conn;
 
-  public function __construct(<<inject('db-dsn')>> string $dsn) {
+  public function __construct(#[Inject('db-dsn')] string $dsn) {
     $this->conn= DriverManager::getConnection($dsn);
   }
 

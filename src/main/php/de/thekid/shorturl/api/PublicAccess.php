@@ -1,9 +1,9 @@
 <?php namespace de\thekid\shorturl\api;
 
 use peer\URL;
-use web\rest\Response;
+use web\rest\{Response, Resource, Get, Post, Param};
 
-<<resource>>
+#[Resource]
 class PublicAccess extends Handler {
   private const SHA1_MIN = 7;
   private const SHA1_MAX = 40;
@@ -39,8 +39,8 @@ class PublicAccess extends Handler {
   }
 
   /** Creates a new URL */
-  <<post('/')>>
-  public function create(<<param>> string $url, <<param>> string $name= null): Response {
+  #[Post('/')]
+  public function create(#[Param] string $url, #[Param] string $name= null): Response {
     $canonical= new URL($url)->getCanonicalURL();
     if (null === $name) {
       return $this->createWithId($canonical);
@@ -50,7 +50,7 @@ class PublicAccess extends Handler {
   }
 
   /** Redirects to an existing URL */
-  <<get('/{id}')>>
+  #[Get('/{id}')]
   public function get(string $id): Response {
     if ($url= $this->urls->lookup($id)) {
       return Response::see($url);
