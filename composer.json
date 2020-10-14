@@ -12,6 +12,7 @@
     "xp-forge/inject": "^5.0",
     "xp-forge/web": "^2.0",
     "xp-forge/rest-api": "^3.0",
+    "xp-forge/web-auth": "dev-feature/optional as 2.0.0",
     "xp-lang/php-compact-methods": "^1.0",
     "php" : ">=7.0.0"
   }
