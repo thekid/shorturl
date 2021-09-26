@@ -7,12 +7,10 @@ use web\{Request, Error};
 
 #[Resource]
 class Administration {
-  private $paging;
+  private $paging= new Paging(50, [new PageParameters('page', 'per_page')]);
 
   /** Creates administration API handler */
-  public function __construct(private Urls $urls) {
-    $this->paging= new Paging(50, [new PageParameters('page', 'per_page')]);
-  }
+  public function __construct(private Urls $urls) { }
 
   /** Returns all URLs */
   #[Get('/')]
