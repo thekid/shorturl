@@ -16,6 +16,6 @@ class Api extends Application {
 
     // Use optional authentication - not all routes require authentication.
     // The handlers must implement verifying a user is present themselves!
-    return $auth->optional(new RestApi(new ResourcesIn('de.thekid.shorturl.api', [$injector, 'get'])));
+    return $auth->optional(new RestApi(new ResourcesIn('de.thekid.shorturl.api', $injector->get(...))));
   }
 }
