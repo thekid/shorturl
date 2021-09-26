@@ -1,17 +1,25 @@
 <?php namespace de\thekid\shorturl\api;
 
+use de\thekid\shorturl\Urls;
+use web\rest\paging\{Paging, PageParameters};
 use web\rest\{Response, Resource, Get, Delete, Value};
 use web\{Request, Error};
 
 #[Resource]
-class Administration extends Handler {
+class Administration {
+  private $paging;
+
+  /** Creates administration API handler */
+  public function __construct(private Urls $urls) {
+    $this->paging= new Paging(50, [new PageParameters('page', 'per_page')]);
+  }
 
   /** Returns all URLs */
   #[Get('/')]
   public function all(Request $request, #[Value] $user= null): Response {
     $user ?? throw new Error(403, 'Must be authenticated to list all URLs');
 
-    $pagination= $this->paging()->on($request);
+    $pagination= $this->paging->on($request);
     return $pagination->paginate($this->urls->all(
       $pagination->start() ?: 0,
       $pagination->limit() + 1

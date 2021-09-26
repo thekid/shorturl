@@ -1,12 +1,16 @@
 <?php namespace de\thekid\shorturl\api;
 
+use de\thekid\shorturl\Urls;
 use peer\URL;
 use web\rest\{Response, Resource, Get, Post, Param};
 
 #[Resource]
-class PublicAccess extends Handler {
+class PublicAccess {
   private const SHA1_MIN = 7;
   private const SHA1_MAX = 40;
+
+  /** Creates public API handler */
+  public function __construct(private Urls $urls) { }
 
   /** Creates an entry with a given name */
   private function createNamed(string $name, string $canonical): Response {
