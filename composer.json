@@ -9,7 +9,7 @@
     "xp-framework/core": "^11.0",
     "xp-framework/compiler": "^8.0",
     "xp-framework/rdbms": "^13.0",
-    "xp-forge/inject": "^5.0",
+    "xp-forge/inject": "^5.4",
     "xp-forge/web": "^3.0",
     "xp-forge/rest-api": "^3.0",
     "xp-forge/web-auth": "^3.0",
