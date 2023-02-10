@@ -4,6 +4,7 @@ use de\thekid\shorturl\Urls;
 use peer\URL;
 use web\rest\{Response, Resource, Get, Post, Param};
 
+/** @test de.thekid.shorturl.unittest.PublicAccessTest */
 #[Resource]
 class PublicAccess {
   private const SHA1_MIN = 7;

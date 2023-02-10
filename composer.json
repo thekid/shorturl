@@ -15,5 +15,8 @@
     "xp-forge/web-auth": "^3.0",
     "xp-lang/php-compact-methods": "^1.0",
     "php" : ">=7.0.0"
+  },
+  "require-dev" : {
+    "xp-framework/test": "^1.0"
   }
 }
