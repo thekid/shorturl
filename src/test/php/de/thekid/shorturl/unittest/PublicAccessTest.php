@@ -2,10 +2,10 @@
 
 use de\thekid\shorturl\api\PublicAccess;
 use peer\URL;
-use test\{Assert, Test};
+use test\{Assert, Test, Values};
 
 class PublicAccessTest {
-  private const URLS= ['test' => 'https://example.com/'];
+  private const URLS= ['test' => 'https://example.com/', 'e8762e2' => 'https://test.example.com/'];
 
   #[Test]
   public function can_create() {
@@ -36,6 +36,14 @@ class PublicAccessTest {
     Assert::equals('/da4ad12', $r->export()['headers']['Location']);
   }
 
+  #[Test, Values(['https://test.example.com', 'https://test.example.com/', 'https://TEST.example.com/'])]
+  public function create_given_existing_url_redirects($url) {
+    $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($url));
+
+    Assert::equals(302, $r->export()['status']);
+    Assert::equals('/e8762e2', $r->export()['headers']['Location']);
+  }
+
   #[Test]
   public function create_named() {
     $added= 'https://named.example.com/';
@@ -46,7 +54,7 @@ class PublicAccessTest {
   }
 
   #[Test]
-  public function create_given_existing_name() {
+  public function create_given_existing_name_yield_conflict() {
     $added= 'https://another.example.com/';
     $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($added), 'test');
 
