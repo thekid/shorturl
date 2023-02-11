@@ -32,7 +32,7 @@ class Administration {
     if ($this->urls->remove($id)) {
       return Response::noContent();
     } else {
-      return Response::notFound(['message' => 'No url by id #'.$id]);
+      return Response::notFound('No url by id #'.$id);
     }
   }
 }
