@@ -1,6 +1,5 @@
 <?php namespace de\thekid\shorturl\unittest;
 
-use lang\Reflection;
 use test\Test;
 use web\Error;
 
