@@ -7,57 +7,65 @@ use test\{Assert, Test, Values};
 class PublicAccessTest {
   private const URLS= ['test' => 'https://example.com/', 'e8762e2' => 'https://test.example.com/'];
 
-  #[Test]
-  public function can_create() {
-    new PublicAccess(new TestingUrls());
+  /** Test helper */
+  private function test(function(PublicAccess): mixed $call): array<int, mixed> {
+    $e= $call(new PublicAccess(new TestingUrls(self::URLS)))->export();
+    return [$e['status'] => match ($e['status']) {
+      201, 302 => $e['headers']['Location'],
+      default  => $e['body']['error']['message'] ?? $e['body'],
+    }];
   }
 
   #[Test]
-  public function get_existing_sends_redirect() {
-    $r= new PublicAccess(new TestingUrls(self::URLS))->get('test');
+  public function can_create() {
+    new PublicAccess(new TestingUrls(self::URLS));
+  }
 
-    Assert::equals(302, $r->export()['status']);
-    Assert::equals(self::URLS['test'], $r->export()['headers']['Location']);
+  #[Test, Values(['test', 'e8762e2'])]
+  public function get_existing_sends_redirect($id) {
+    Assert::equals(
+      [302 => self::URLS[$id]],
+      $this->test(fn($fixture) => $fixture->get($id)),
+    );
   }
 
   #[Test]
   public function get_non_existant_yields_404() {
-    $r= new PublicAccess(new TestingUrls(self::URLS))->get('non-existant');
-
-    Assert::equals(404, $r->export()['status']);
+    Assert::equals(
+      [404 => 'No url by id #non-existant'],
+      $this->test(fn($fixture) => $fixture->get('non-existant')),
+    );
   }
 
   #[Test]
   public function create() {
-    $added= 'https://added.example.com/';
-    $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($added));
-
-    Assert::equals(201, $r->export()['status']);
-    Assert::equals('/da4ad12', $r->export()['headers']['Location']);
+    Assert::equals(
+      [201 => '/da4ad12'],
+      $this->test(fn($fixture) => $fixture->create(new URL('https://added.example.com/'))),
+    );
   }
 
   #[Test, Values(['https://test.example.com', 'https://test.example.com/', 'https://TEST.example.com/'])]
   public function create_given_existing_url_redirects($url) {
-    $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($url));
-
-    Assert::equals(302, $r->export()['status']);
-    Assert::equals('/e8762e2', $r->export()['headers']['Location']);
+    Assert::equals(
+      [302 => '/e8762e2'],
+      $this->test(fn($fixture) => $fixture->create(new URL($url))),
+    );
   }
 
-  #[Test]
-  public function create_named() {
-    $added= 'https://named.example.com/';
-    $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($added), 'named');
-
-    Assert::equals(201, $r->export()['status']);
-    Assert::equals('/named', $r->export()['headers']['Location']);
+  #[Test, Values(['named', 'Named', 'NAMED'])]
+  public function create_named($name) {
+    Assert::equals(
+      [201 => '/named'],
+      $this->test(fn($fixture) => $fixture->create(new URL('https://named.example.com/'), $name)),
+    );
   }
 
-  #[Test]
-  public function create_given_existing_name_yield_conflict() {
-    $added= 'https://another.example.com/';
-    $r= new PublicAccess(new TestingUrls(self::URLS))->create(new URL($added), 'test');
-
-    Assert::equals(409, $r->export()['status']);
+  #[Test, Values(['test', 'Test', 'TEST'])]
+  public function create_given_existing_name_yield_conflict($name) {
+    Assert::equals(
+      [409 => 'Name "test" already taken'],
+      $this->test(fn($fixture) => $fixture->create(new URL('https://another.example.com/'), $name)),
+    );
   }
 }

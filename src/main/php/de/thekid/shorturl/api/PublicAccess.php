@@ -60,7 +60,7 @@ class PublicAccess {
     if ($url= $this->urls->lookup($id)) {
       return Response::see($url);
     } else {
-      return Response::notFound(['message' => 'No url by id #'.$id]);
+      return Response::notFound('No url by id #'.$id);
     }
   }
 }
