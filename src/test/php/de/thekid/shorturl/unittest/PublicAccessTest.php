@@ -4,22 +4,8 @@ use de\thekid\shorturl\api\PublicAccess;
 use peer\URL;
 use test\{Assert, Test, Values};
 
-class PublicAccessTest {
-  private const URLS= ['test' => 'https://example.com/', 'e8762e2' => 'https://test.example.com/'];
-
-  /** Test helper */
-  private function test(function(PublicAccess): mixed $call): array<int, mixed> {
-    $e= $call(new PublicAccess(new TestingUrls(self::URLS)))->export();
-    return [$e['status'] => match ($e['status']) {
-      201, 302 => $e['headers']['Location'],
-      default  => $e['body']['error']['message'] ?? $e['body'],
-    }];
-  }
-
-  #[Test]
-  public function can_create() {
-    new PublicAccess(new TestingUrls(self::URLS));
-  }
+class PublicAccessTest extends ApiTest {
+  protected static $fixture= PublicAccess::class;
 
   #[Test, Values(['test', 'e8762e2'])]
   public function get_existing_sends_redirect($id) {
