@@ -26,6 +26,6 @@ class TestingUrls extends Urls {
 
   /** Fetches all URLs */
   public function all(int $start, int $limit): iterable {
-    return $this->urls;
+    return array_slice($this->urls, $start, $limit);
   }
 }
