@@ -8,7 +8,7 @@ abstract class ApiTest<T> {
   protected const URLS= ['test' => 'https://example.com/', 'e8762e2' => 'https://test.example.com/'];
 
   /** Test helper */
-  protected function test(function(object): mixed $call): array<int, mixed> {
+  protected function test(function(T): mixed $call): array<int, mixed> {
     try {
       $e= $call($T->newInstance(new TestingUrls(self::URLS)))->export();
     } catch (Error $e) {
