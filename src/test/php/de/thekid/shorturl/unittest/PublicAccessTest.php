@@ -4,8 +4,7 @@ use de\thekid\shorturl\api\PublicAccess;
 use peer\URL;
 use test\{Assert, Test, Values};
 
-class PublicAccessTest extends ApiTest {
-  protected static $fixture= PublicAccess::class;
+class PublicAccessTest extends ApiTest<PublicAccess> {
 
   #[Test, Values(['test', 'e8762e2'])]
   public function get_existing_sends_redirect($id) {
