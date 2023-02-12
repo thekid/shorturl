@@ -5,8 +5,7 @@ use test\{Assert, Test, Values};
 use web\Request;
 use web\io\TestInput;
 
-class AdministrationTest extends ApiTest {
-  protected static $fixture= Administration::class;
+class AdministrationTest extends ApiTest<Administration> {
   private const USER= ['id' => 'admin'];
 
   #[Test]
