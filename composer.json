@@ -11,7 +11,7 @@
     "xp-framework/rdbms": "^13.0",
     "xp-forge/inject": "^5.4",
     "xp-forge/web": "^3.0",
-    "xp-forge/rest-api": "^3.0",
+    "xp-forge/rest-api": "^4.0",
     "xp-forge/web-auth": "^3.0",
     "xp-lang/php-compact-methods": "^1.0",
     "xp-lang/xp-generics": "^0.5",
