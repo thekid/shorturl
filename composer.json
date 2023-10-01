@@ -14,7 +14,7 @@
     "xp-forge/rest-api": "^4.0",
     "xp-forge/web-auth": "^3.0",
     "xp-lang/php-compact-methods": "^1.0",
-    "xp-lang/xp-generics": "^0.6",
+    "xp-lang/xp-generics": "^0.7",
     "php" : ">=7.0.0"
   },
   "require-dev" : {

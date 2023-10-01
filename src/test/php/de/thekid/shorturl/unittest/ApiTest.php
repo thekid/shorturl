@@ -11,7 +11,7 @@ abstract class ApiTest<T> {
   /** Test helper */
   protected function test(function(T): Response $call): array<int, mixed> {
     try {
-      $e= $call($T->newInstance(new TestingUrls(self::URLS)))->export();
+      $e= $call(new T(new TestingUrls(self::URLS)))->export();
     } catch (Error $e) {
       $e= ['status' => $e->status(), 'body' => ['error' => ['message' => $e->getMessage()]]];
     }
